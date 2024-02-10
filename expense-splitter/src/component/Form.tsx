@@ -1,18 +1,15 @@
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode, useContext, useState } from "react";
 import styled from "styled-components";
-
+import { FormContext } from "../context/FormProvider";
+import { IFormContextValue } from "../models/formModel";
+import GroupedInput from "./GroupedInput"
   const FormContainer = styled.form`
     max-height: 80vh;
     overflow: scroll;
     
   `
 
-  const FloatingLabel = styled.label<{$isFloating?:boolean;}>`
-    transform: ${props =>props.$isFloating&& "translateY(-1rem);"};
-    transition: transform 0.2s ease-in-out;
-    font-size: 0.8rem;
-    color: #515151;
-  `
+  
   
 
   const BtnContainer = styled.div`
@@ -20,41 +17,36 @@ import styled from "styled-components";
     flex-flow: row wrap;
     justify-content: space-between;
   `
-function Form() {
-  const [personAmount,setPersonAmount] = useState(1)
+  
 
 
-  interface GroupInputProps{
+  interface IParticipantFormProps{
     name:string,
-    placeholder:string,
+    payment:string,
+    participantIndex:number
   }
 
-  const GroupedInput:React.FC<GroupInputProps> = ({name,placeholder}) => {
-    return(
-      <>
-        <div className="form-floating mb-3">
-
-        {/* let's set this floating attribute temporarily to true, TODO: 
-        When state arrangement frame is ready we will dynamically change the isFloating value based
-        on the input is empty or not. 
-        */}
-        <FloatingLabel htmlFor="floatingInput" $isFloating={true}>{name}</FloatingLabel>
-        <input type="text" className="form-control" id="floatingInput" placeholder={placeholder}/>
-        </div>
-      </>
-    )
-  
-  };
-
- 
-  const ParticipantForm: React.FC = () => {
+  const ParticipantForm: React.FC<IParticipantFormProps> = ({name,payment,participantIndex}) => {
+    
     return (
       <>
-        <GroupedInput name={"NAME"} placeholder={"Your Name"} />
-        <GroupedInput name={"Payment"} placeholder={"Payment in advance"} />
+        <GroupedInput dataId="name" name={"NAME"} placeholder={"Your Name"} value={name} participantIndex={participantIndex}/>
+        <GroupedInput dataId="payment" name={"Payment"} placeholder={"Payment in advance"} value={payment} participantIndex={participantIndex}/>
       </>
     );
   };
+
+  const addPerson:React.MouseEventHandler<HTMLButtonElement> = (e)=>{
+    e.preventDefault()
+    
+
+  }
+function Form() {
+  const {formStates,formDispatch} = useContext(FormContext)
+
+  
+
+
 
   
   // let persons:JSX.Element[] = []
@@ -66,11 +58,6 @@ function Form() {
     
   
 
-  const addPerson:React.MouseEventHandler<HTMLButtonElement> = (e)=>{
-    e.preventDefault()
-    setPersonAmount((number)=>number+=1)
-
-  }
 
 
 
@@ -78,7 +65,7 @@ function Form() {
     <FormContainer >{/*onSubmit={handleSUbmit} without action  --> button type="submit"*/ }
       <div>
 
-      {Array.from({length:personAmount}).map((person,index)=><ParticipantForm key={index}/>)}
+      {Array.from(formStates.participantInputs).map((participantInput,index)=><ParticipantForm key={index} name={participantInput?.name} payment={participantInput?.payment} participantIndex={index}/>)}
       </div>
       
       <BtnContainer>
