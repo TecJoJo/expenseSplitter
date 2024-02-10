@@ -1,45 +1,52 @@
 import React, { ReactNode, useState } from "react";
 import styled from "styled-components";
 
+  const FormContainer = styled.form`
+    max-height: 80vh;
+    overflow: scroll;
+    
+  `
+
+  const FloatingLabel = styled.label<{$isFloating?:boolean;}>`
+    transform: ${props =>props.$isFloating&& "translateY(-1rem);"};
+    transition: transform 0.2s ease-in-out;
+    font-size: 0.8rem;
+    color: #515151;
+  `
+  
+
+  const BtnContainer = styled.div`
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+  `
 function Form() {
   const [personAmount,setPersonAmount] = useState(1)
 
-  const InputContainer = styled.div`
-    display: flex;
-    flex-direction: row;
-    margin: 1rem 0;
-  `;
-  const LabelWrapper = styled.div`
-    border-left: solid 1px black;
-    border-top: solid 1px black;
-    border-bottom: solid 1px black;
 
-    border-radius: 10px 0 0 10px;
-    min-width: 6rem;
-  `;
-  const Label = styled.label``;
-  const Input = styled.input`
-    width: 30rem;
-    border: solid 1px black;
-    border-radius: 0 10px 10px 0;
-  `;
+  interface GroupInputProps{
+    name:string,
+    placeholder:string,
+  }
 
-  const GroupedInput: React.FC<GroupedInputProps> = ({ name, placeholder }) => {
-    return (
-      <InputContainer>
-        <LabelWrapper>
-          <Label>{name}</Label>
-        </LabelWrapper>
+  const GroupedInput:React.FC<GroupInputProps> = ({name,placeholder}) => {
+    return(
+      <>
+        <div className="form-floating mb-3">
 
-        <Input placeholder={placeholder}></Input>
-      </InputContainer>
-    );
+        {/* let's set this floating attribute temporarily to true, TODO: 
+        When state arrangement frame is ready we will dynamically change the isFloating value based
+        on the input is empty or not. 
+        */}
+        <FloatingLabel htmlFor="floatingInput" $isFloating={true}>{name}</FloatingLabel>
+        <input type="text" className="form-control" id="floatingInput" placeholder={placeholder}/>
+        </div>
+      </>
+    )
+  
   };
 
-  interface GroupedInputProps {
-    name: string;
-    placeholder: string;
-  }
+ 
   const ParticipantForm: React.FC = () => {
     return (
       <>
@@ -68,14 +75,26 @@ function Form() {
 
 
   return (
-    <form action="" method="">
-      
+    <FormContainer >{/*onSubmit={handleSUbmit} without action  --> button type="submit"*/ }
+      <div>
+
       {Array.from({length:personAmount}).map((person,index)=><ParticipantForm key={index}/>)}
+      </div>
       
-      <button onClick={addPerson} className=" btn btn-primary ">
+      <BtnContainer>
+
+      <button onClick={addPerson} className=" btn btn-primary me-5 ">
         add person
       </button>
-    </form>
+      <button className="btn btn-danger m-1  ">
+        Reset persons
+      </button>
+      <button className="btn btn-danger m-1 ">
+        Reset Values
+      </button>
+      </BtnContainer>
+      
+    </FormContainer>
   );
 }
 
