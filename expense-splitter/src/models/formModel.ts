@@ -1,6 +1,7 @@
 export interface IFormStates {
-    personAmount?: number;
-    participantInputs:IParticipantInput[]
+    
+    participantInputs:IParticipantInput[];
+    
   }
 
 
@@ -11,6 +12,7 @@ export interface IFormStates {
 export interface IParticipantInput{
     name:string,
     payment:string
+    isFloating:{name:boolean,payment:boolean}
 }
 
 

@@ -11,14 +11,14 @@ interface IGroupInputProps{
     placeholder:string,
     
     participantIndex:number,
-    dataId:keyof IParticipantInput,// determine which input it is about, "name" or "payment"
+    dataId:keyof Pick<IParticipantInput,"name"|"payment">,// determine which input it is about, "name" or "payment"
   }
 
 const GroupedInput:React.FC<IGroupInputProps> = ({name,placeholder,participantIndex,dataId}) => {
     const {formStates,formDispatch} = useContext(FormContext)
 
 
-    const FloatingLabel = styled.label<{$isFloating?:boolean;}>`
+    const FloatingLabel = styled.label<{$isFloating:boolean;}>`
     transform: ${props =>props.$isFloating&& "translateY(-1rem);"};
     transition: transform 0.2s ease-in-out;
     font-size: 0.8rem;
@@ -40,8 +40,8 @@ const GroupedInput:React.FC<IGroupInputProps> = ({name,placeholder,participantIn
       When state arrangement frame is ready we will dynamically change the isFloating value based
       on the input is empty or not.
       */}
-      <FloatingLabel htmlFor="floatingInput" $isFloating={true}>{name}</FloatingLabel>
-      <input onChange={handleInputChange} value={formStates.participantInputs[participantIndex][dataId]} type="text" className="form-control" id="floatingInput" placeholder={placeholder}/>
+      <FloatingLabel htmlFor="floatingInput" $isFloating={formStates.participantInputs?.[participantIndex]?.isFloating[dataId]}>{name}</FloatingLabel>
+      <input onChange={handleInputChange} value={formStates.participantInputs?.[participantIndex]?.[dataId]} type="text" className="form-control" id="floatingInput" placeholder={placeholder}/>
       </div>
     </>
   )
