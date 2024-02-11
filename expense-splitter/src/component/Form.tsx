@@ -21,17 +21,16 @@ import GroupedInput from "./GroupedInput"
 
 
   interface IParticipantFormProps{
-    name:string,
-    payment:string,
+    
     participantIndex:number
   }
 
-  const ParticipantForm: React.FC<IParticipantFormProps> = ({name,payment,participantIndex}) => {
+  const ParticipantForm: React.FC<IParticipantFormProps> = ({participantIndex}) => {
     
     return (
       <>
-        <GroupedInput dataId="name" name={"NAME"} placeholder={"Your Name"} value={name} participantIndex={participantIndex}/>
-        <GroupedInput dataId="payment" name={"Payment"} placeholder={"Payment in advance"} value={payment} participantIndex={participantIndex}/>
+        <GroupedInput dataId="name" name={"NAME"} placeholder={"Your Name"}  participantIndex={participantIndex}/>
+        <GroupedInput dataId="payment" name={"Payment"} placeholder={"Payment in advance"}  participantIndex={participantIndex}/>
       </>
     );
   };
@@ -65,7 +64,7 @@ function Form() {
     <FormContainer >{/*onSubmit={handleSUbmit} without action  --> button type="submit"*/ }
       <div>
 
-      {Array.from(formStates.participantInputs).map((participantInput,index)=><ParticipantForm key={index} name={participantInput?.name} payment={participantInput?.payment} participantIndex={index}/>)}
+      {Array.from(formStates.participantInputs).map((participantInput,index)=><ParticipantForm key={index}  participantIndex={index}/>)}
       </div>
       
       <BtnContainer>

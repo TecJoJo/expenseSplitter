@@ -1,7 +1,7 @@
 import React, { ReactNode, useContext, useState } from "react";
 import styled from "styled-components";
 import { FormContext } from "../context/FormProvider";
-import { IFormContextValue } from "../models/formModel";
+import { IFormContextValue,IParticipantInput } from "../models/formModel";
 import { CHANGE_INPUT_VALUE } from "../models/actions";
 
 
@@ -9,12 +9,12 @@ import { CHANGE_INPUT_VALUE } from "../models/actions";
 interface IGroupInputProps{
     name:string,
     placeholder:string,
-    value:string,
+    
     participantIndex:number,
-    dataId:string,
+    dataId:keyof IParticipantInput,// determine which input it is about, "name" or "payment"
   }
 
-const GroupedInput:React.FC<IGroupInputProps> = ({name,placeholder,value,participantIndex,dataId}) => {
+const GroupedInput:React.FC<IGroupInputProps> = ({name,placeholder,participantIndex,dataId}) => {
     const {formStates,formDispatch} = useContext(FormContext)
 
 
@@ -41,7 +41,7 @@ const GroupedInput:React.FC<IGroupInputProps> = ({name,placeholder,value,partici
       on the input is empty or not.
       */}
       <FloatingLabel htmlFor="floatingInput" $isFloating={true}>{name}</FloatingLabel>
-      <input onChange={handleInputChange} value={value} type="text" className="form-control" id="floatingInput" placeholder={placeholder}/>
+      <input onChange={handleInputChange} value={formStates.participantInputs[participantIndex][dataId]} type="text" className="form-control" id="floatingInput" placeholder={placeholder}/>
       </div>
     </>
   )
