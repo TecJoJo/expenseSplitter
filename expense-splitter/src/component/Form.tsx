@@ -34,6 +34,7 @@ import { CiEraser } from "react-icons/ci";
 
   const ParticipantForm: React.FC<IParticipantFormProps> = ({participantIndex}) => {
     
+    
     return (
       <>
         <div className="border-bottom  border-primary-subtle">
@@ -42,9 +43,18 @@ import { CiEraser } from "react-icons/ci";
         <GroupedInput dataId="payment" name={"Payment"} placeholder={"Payment in advance"}  participantIndex={participantIndex}/>
         <div className=" d-flex justify-content-end ">
 
-        <MdDeleteForever size="2rem"/>
+        <button type="button"  className="btn btn-outline-danger m-1">
 
-        <CiEraser size="2rem" />
+        <MdDeleteForever size="1rem"/>
+        <span style={{fontSize:"0.7rem"}}>Delete</span>
+        </button>
+        <button type="button" className="btn btn-outline-secondary m-1">
+
+        <CiEraser size="1rem" />
+        <span style={{fontSize:"0.7rem"}} >Clear</span>
+        </button>
+
+        
         </div>
         </div>
       </>
