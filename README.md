@@ -6,6 +6,9 @@ The Expense Splitter is an evolving project aimed at simplifying the process of 
 Motivation:
 The idea came to mind as I attended a food night with four other friends from different fields at the same university. I somehow became the one to do the "simple" calculations for the expenses that night. As I have been actively working on side projects after school and holding a part-time job as a software trainee, almost automatically, a voice came into my mind: "Why shouldn't I automate this process using my programming skills?" So later in the night, after midnight, I started to code something...
 
+### Todo
+
+- [ ] BUG fix, transition not applied to the input element.
 
 ### Planned Features:
 

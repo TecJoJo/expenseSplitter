@@ -1,4 +1,9 @@
 import React, { ReactNode, useContext, useState } from "react";
+import {
+  ADD_USER_INPUTS,
+  RESET_ALL_USERS,
+  RESET_ALL_INPUT_VALUES,
+} from "../models/actions"
 import styled from "styled-components";
 import { FormContext } from "../context/FormProvider";
 import { IFormContextValue } from "../models/formModel";
@@ -35,15 +40,26 @@ import GroupedInput from "./GroupedInput"
     );
   };
 
-  const addPerson:React.MouseEventHandler<HTMLButtonElement> = (e)=>{
-    e.preventDefault()
+  function Form() {
+    const {formStates,formDispatch} = useContext(FormContext)
     
-
-  }
-function Form() {
-  const {formStates,formDispatch} = useContext(FormContext)
-
+    const addPerson:React.MouseEventHandler<HTMLButtonElement> = ()=>{
+      
+      formDispatch({type:ADD_USER_INPUTS})
   
+    }
+    const resetAllUsers:React.MouseEventHandler<HTMLButtonElement> = ()=>{
+      
+      formDispatch({type:RESET_ALL_USERS})
+  
+    }
+    const resetAllInputValues:React.MouseEventHandler<HTMLButtonElement> = ()=>{
+      
+      formDispatch({type:RESET_ALL_INPUT_VALUES})
+  
+    }
+  
+
 
 
 
@@ -69,14 +85,14 @@ function Form() {
       
       <BtnContainer>
 
-      <button onClick={addPerson} className=" btn btn-primary me-5 ">
-        add person
+      <button type="button" onClick={addPerson} className=" btn btn-primary me-5 ">
+        Add User 
       </button>
-      <button className="btn btn-danger m-1  ">
-        Reset persons
+      <button type="button" onClick={resetAllUsers} className="btn btn-danger m-1  ">
+        Reset All Users
       </button>
-      <button className="btn btn-danger m-1 ">
-        Reset Values
+      <button type="button" onClick={resetAllInputValues} className="btn btn-danger m-1 ">
+        Reset All Input Values
       </button>
       </BtnContainer>
       
