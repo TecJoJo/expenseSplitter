@@ -44,7 +44,7 @@ const GroupedInput:React.FC<IGroupInputProps> = ({name,placeholder,participantIn
     }
     return(
     <>
-      <div className="form-floating mb-3">
+      <div className="form-floating  mt-2  mb-2">
 
      
       <FloatingLabel htmlFor="floatingInput" $isFloating={formStates.participantInputs?.[participantIndex]?.isFloating[dataId]}>{name}</FloatingLabel>

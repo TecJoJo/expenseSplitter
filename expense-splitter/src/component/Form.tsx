@@ -8,6 +8,8 @@ import styled from "styled-components";
 import { FormContext } from "../context/FormProvider";
 import { IFormContextValue } from "../models/formModel";
 import GroupedInput from "./GroupedInput"
+import { MdDeleteForever } from "react-icons/md";
+import { CiEraser } from "react-icons/ci";
   const FormContainer = styled.form`
     max-height: 80vh;
     overflow: scroll;
@@ -34,8 +36,17 @@ import GroupedInput from "./GroupedInput"
     
     return (
       <>
+        <div className="border-bottom  border-primary-subtle">
+
         <GroupedInput dataId="name" name={"NAME"} placeholder={"Your Name"}  participantIndex={participantIndex}/>
         <GroupedInput dataId="payment" name={"Payment"} placeholder={"Payment in advance"}  participantIndex={participantIndex}/>
+        <div className=" d-flex justify-content-end ">
+
+        <MdDeleteForever size="2rem"/>
+
+        <CiEraser size="2rem" />
+        </div>
+        </div>
       </>
     );
   };
