@@ -2,7 +2,7 @@ import React, { ReactNode, useContext, useState } from "react";
 import styled from "styled-components";
 import { FormContext } from "../context/FormProvider";
 import { IFormContextValue,IParticipantInput } from "../models/formModel";
-import { CHANGE_INPUT_VALUE } from "../models/actions";
+import { CHANGE_INPUT_VALUE,SET_IS_FLOATING,SET_IS_NOT_FLOATING } from "../models/actions";
 
 
 
@@ -20,7 +20,7 @@ const GroupedInput:React.FC<IGroupInputProps> = ({name,placeholder,participantIn
 
     const FloatingLabel = styled.label<{$isFloating:boolean;}>`
     transform: ${props =>props.$isFloating&& "translateY(-1rem);"};
-    transition: transform 0.2s ease-in-out;
+    transition: transform 5s ease-in-out !important;
     font-size: 0.8rem;
     color: #515151;
   `
@@ -32,16 +32,23 @@ const GroupedInput:React.FC<IGroupInputProps> = ({name,placeholder,participantIn
         
         formDispatch({type:CHANGE_INPUT_VALUE,payload:{participantIndex,dataId,updatedValue}})
     }
+
+    const handleFocus = ()=>{
+      console.log("is focused, the floating state should be changed to true");
+      formDispatch({type:SET_IS_FLOATING,payload:{participantIndex,dataId}})
+    }
+    const handleBlur = (e:React.ChangeEvent<HTMLInputElement>)=>{
+      const updatedValue = e.target.value
+      console.log("is blur, the floating state should be changed to false");
+      formDispatch({type:SET_IS_NOT_FLOATING,payload:{participantIndex,dataId,updatedValue}})
+    }
     return(
     <>
       <div className="form-floating mb-3">
 
-      {/* let's set this floating attribute temporarily to true, TODO: 
-      When state arrangement frame is ready we will dynamically change the isFloating value based
-      on the input is empty or not.
-      */}
+     
       <FloatingLabel htmlFor="floatingInput" $isFloating={formStates.participantInputs?.[participantIndex]?.isFloating[dataId]}>{name}</FloatingLabel>
-      <input onChange={handleInputChange} value={formStates.participantInputs?.[participantIndex]?.[dataId]} type="text" className="form-control" id="floatingInput" placeholder={placeholder}/>
+      <input onBlur={handleBlur} onFocus={handleFocus} onChange={handleInputChange} value={formStates.participantInputs?.[participantIndex]?.[dataId]} type="text" className="form-control" id="floatingInput" placeholder={placeholder}/>
       </div>
     </>
   )
